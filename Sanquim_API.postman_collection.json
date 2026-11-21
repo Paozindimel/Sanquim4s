@@ -1,0 +1,553 @@
+{
+  "info": {
+    "name": "Colégio Sanquim API — MVP Oficial (FATEC ADS)",
+    "_postman_id": "8e2b7a10-4c9d-4f6a-9b11-sanquim2026api",
+    "description": "Coleção oficial ordenada para validação e apresentação na Banca (Demo Day). Ao executar qualquer requisição de Login, o token JWT é salvo automaticamente na variável {{jwt_token}}.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Etapa Gestão (ROLE_GESTAO)",
+      "item": [
+        {
+          "name": "1.1 Login Gestão (Salva Token JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
+                  "    console.log('Token JWT salvo automaticamente para:', jsonData.role);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@sanquim.br\",\n  \"senha\": \"Sanquim@123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "1.2 Listar Professores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/admin/professores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "professores"
+              ]
+            }
+          }
+        },
+        {
+          "name": "1.3 Cadastrar Novo Professor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/professores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "professores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Paulo Cesar\",\n  \"cpf\": \"32165498701\",\n  \"rg\": \"12345678-9\",\n  \"endereco\": \"Rua Cinquenta e Cinco, 505\",\n  \"bairro\": \"Vila Illinois\",\n  \"cidade\": \"Mogi Mirim\",\n  \"fone\": \"19 99299-9999\",\n  \"email\": \"paulo.cesar@sanquim.br\",\n  \"senha\": \"Sanquim@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.4 Listar Alunos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/admin/alunos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "alunos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "1.5 Cadastrar Novo Aluno",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/alunos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "alunos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Lucas Azevedo\",\n  \"ra\": \"36481511590\",\n  \"dataNascimento\": \"2008-03-07\",\n  \"cpf\": \"16579816401\",\n  \"rg\": \"64851975-2\",\n  \"endereco\": \"Avenida Padre Almeida, 422\",\n  \"bairro\": \"Tucura\",\n  \"cidade\": \"Mogi Mirim\",\n  \"fone\": \"19 98564-2252\",\n  \"email\": \"lucas.azevedo@aluno.sanquim.br\",\n  \"senha\": \"Sanquim@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.6 Criar Nova Turma Letiva",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/turmas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "turmas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"1º Ano EM - Turma B\",\n  \"curso\": \"Ensino Médio\",\n  \"local\": \"Sala 4\",\n  \"periodo\": \"Matutino\",\n  \"anoLetivo\": 2026\n}"
+            }
+          }
+        },
+        {
+          "name": "1.7 Cadastrar Nova Disciplina",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/disciplinas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "disciplinas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Geografia\",\n  \"cargaHoraria\": 60,\n  \"turmaId\": 1,\n  \"professorId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "1.8 Matricular (Enturmar) Novo Aluno na Turma 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/matriculas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "matriculas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alunoId\": 6,\n  \"turmaId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Etapa Professor & Diário (ROLE_PROFESSOR)",
+      "item": [
+        {
+          "name": "2.1 Login Professor Rodrigo (Salva Token JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
+                  "    console.log('Token JWT salvo automaticamente para:', jsonData.role);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"rodrigo.martins@sanquim.br\",\n  \"senha\": \"Sanquim@123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "2.2 Consultar Minhas Turmas e Alunos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/diario/minhas-turmas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "diario",
+                "minhas-turmas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "2.3 Registrar Chamada em Lote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/diario/chamada",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "diario",
+                "chamada"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"turmaId\": 1,\n  \"disciplinaId\": 2,\n  \"dataAula\": \"2026-11-18\",\n  \"registros\": [\n    {\n      \"alunoId\": 1,\n      \"presente\": true\n    },\n    {\n      \"alunoId\": 2,\n      \"presente\": true\n    },\n    {\n      \"alunoId\": 3,\n      \"presente\": true\n    },\n    {\n      \"alunoId\": 4,\n      \"presente\": false\n    },\n    {\n      \"alunoId\": 5,\n      \"presente\": true\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "2.4 Cadastrar Nova Avaliação",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/diario/avaliacoes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "diario",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Trabalho Prático — Progressão Aritmética e Geométrica\",\n  \"tipo\": \"TRABALHO\",\n  \"peso\": 1.0,\n  \"notaMaxima\": 10.0,\n  \"dataEntrega\": \"2026-11-20\",\n  \"turmaId\": 1,\n  \"disciplinaId\": 2\n}"
+            }
+          }
+        },
+        {
+          "name": "2.5 Lançar/Atualizar Notas na Avaliação 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/diario/avaliacoes/1/notas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "diario",
+                "avaliacoes",
+                "1",
+                "notas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notas\": [\n    {\n      \"alunoId\": 1,\n      \"valor\": 9.0,\n      \"observacao\": \"Nota revisada após correção comentada\"\n    },\n    {\n      \"alunoId\": 2,\n      \"valor\": 7.5,\n      \"observacao\": \"Bom desenvolvimento\"\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "2.6 Registrar Plano de Aula",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/diario/planos-aula",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "diario",
+                "planos-aula"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"turmaId\": 1,\n  \"disciplinaId\": 2,\n  \"dataAula\": \"2026-11-18\",\n  \"titulo\": \"Aula 04 — Progressões Aritméticas (PA)\",\n  \"conteudo\": \"Termo geral da PA, interpolação aritmética e soma dos n primeiros termos.\",\n  \"objetivos\": \"Resolver problemas contextualizados do ENEM envolvendo sequências numéricas.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Etapa Aluno & Validação RBAC 403 (ROLE_ALUNO)",
+      "item": [
+        {
+          "name": "3.1 Login Aluno Roberto (Salva Token JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
+                  "    console.log('Token JWT salvo automaticamente para:', jsonData.role);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"roberto@aluno.sanquim.br\",\n  \"senha\": \"Sanquim@123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3.2 Consultar Meu Boletim e Médias Parciais",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/aluno/boletim",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "aluno",
+                "boletim"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3.3 Consultar Minha Frequência e Faltas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/aluno/frequencia",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "aluno",
+                "frequencia"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3.4 Consultar Linha do Tempo de Aulas Lecionadas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/aluno/aulas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "aluno",
+                "aulas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3.5 [TESTE BANCA] Aluno tentando acessar /api/admin/alunos (Deve retornar 403 Forbidden)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/admin/alunos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "alunos"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
